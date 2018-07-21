@@ -9,8 +9,8 @@ setup(
     packaages=find_packages(),
     install_requires=[
         'beautifulsoup4 >= 4.6.0',
-        'lxml >= 4.2.1',
-        'requestes >= 2.18.4',
+        'lxml >= 4.2.0',
+        'requests >= 2.18.4',
     ],
     zip_safe=False
 )
