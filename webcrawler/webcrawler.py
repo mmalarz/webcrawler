@@ -1,3 +1,4 @@
+import os
 from contextlib import closing
 from multiprocessing import cpu_count
 from multiprocessing.dummy import Pool as ThreadPool
@@ -6,7 +7,7 @@ from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 import requests
 
-from files.management import *
+from .files import management
 
 
 THREADS_NUMBER = cpu_count()
@@ -31,12 +32,12 @@ class WebCrawler:
 
     @staticmethod
     def setup():
-        create_project_directory(WebCrawler.project_name)
-        create_project_files(WebCrawler.project_name, WebCrawler.base_url)
+        management.create_project_directory(WebCrawler.project_name)
+        management.create_project_files(WebCrawler.project_name, WebCrawler.base_url)
 
         # load previous search state, if there was any
-        WebCrawler.queue_set = file_to_set(WebCrawler.queue_file)
-        WebCrawler.crawled_set = file_to_set(WebCrawler.crawled_file)
+        WebCrawler.queue_set = management.file_to_set(WebCrawler.queue_file)
+        WebCrawler.crawled_set = management.file_to_set(WebCrawler.crawled_file)
 
     @staticmethod
     def crawl_page(page_url):
@@ -83,8 +84,8 @@ class WebCrawler:
 
     @staticmethod
     def update_files():
-        set_to_file(WebCrawler.queue_set, WebCrawler.queue_file)
-        set_to_file(WebCrawler.crawled_set, WebCrawler.crawled_file)
+        management.set_to_file(WebCrawler.queue_set, WebCrawler.queue_file)
+        management.set_to_file(WebCrawler.crawled_set, WebCrawler.crawled_file)
 
 
 def main():
